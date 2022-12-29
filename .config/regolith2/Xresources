@@ -1,0 +1,7 @@
+regolith.wallpaper.file: 
+regolith.wallpaper.file: 
+regolith.wallpaper.color.primary: blue
+regolith.wallpaper.file: 
+regolith.wallpaper.color.primary: black
+!regolith.look.path: /usr/share/regolith-look/default
+regolith.look.path: /usr/share/regolith-look/gruvbox
