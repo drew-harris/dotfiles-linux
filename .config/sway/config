@@ -18,7 +18,12 @@ set $term alacritty
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
-set $menu dmenu_path | dmenu | xargs swaymsg exec --
+
+#----
+#set $menu dmenu_path | dmenu | xargs swaymsg exec --
+# Replacing above to 
+set $menu j4-dmenu-desktop
+
 
 include /etc/sway/config-vars.d/*
 
@@ -207,14 +212,23 @@ bar {
 
     # When the status_command prints a new line to stdout, swaybar updates.
     # The default just shows the current date and time.
-    status_command while date +'%Y-%m-%d %I:%M:%S %p'; do sleep 1; done
+    # status_command while date +'%Y-%m-%d %I:%M:%S %p'; do sleep 1; done
+    status_command i3blocks
+
+    font "Hack Nerd Font Mono 8"
+
+    height 30
 
     colors {
         statusline #ffffff
-        background #323232
+        background #32323299
         inactive_workspace #32323200 #32323200 #5c5c5c
     }
 }
+
+# bar {
+#     swaybar_command waybar
+# }
 
 include /etc/sway/config.d/*
 
@@ -233,9 +247,24 @@ bindsym --locked XF86MonBrightnessDown exec brightnessctl set 5%-
 bindsym --locked XF86MonBrightnessUp exec brightnessctl set 5%+
 
 bindsym --locked XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
-bindsym --locked XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
-bindsym --locked XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
-bindsym --locked XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
+bindsym --locked XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5% && pkill -RTMIN+10 i3blocks
+bindsym --locked XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5% && pkill -RTMIN+10 i3blocks
+bindsym --locked XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle && pkill -RTMIN+10 i3blocks
+
+bindsym XF86AudioNext exec playerctl next
+bindsym XF86AudioPrev exec playerctl previous
 
 default_border none
 default_floating_border none
+
+client.focused          #4c7899 #285577 #ffffff #2e9ef4   #285577
+default_border pixel 2
+hide_edge_borders none
+
+gaps inner 10
+
+# Set wallpaper
+output "*" bg ~/Downloads/wallpaper.jpg fill
+
+
+exec blueman-applet
